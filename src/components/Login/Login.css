@@ -1,0 +1,139 @@
+.login {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.login__logo-link {
+  cursor: pointer;
+}
+
+.login__inner {
+  margin-top: 70px;
+}
+
+.login__title {
+  font-size: 24px;
+  font-weight: 500;
+  line-height: 27px;
+  margin: 39px 0;
+  letter-spacing: 1px;
+}
+
+.login__form {
+  max-width: 396px;
+}
+
+.login__labal {
+  display: block;
+  color: #8b8b8b;
+  font-size: 10px;
+  font-weight: 400;
+  line-height: 12px;
+}
+
+.login__input {
+  width: 396px;
+  display: block;
+  border: none;
+  border-radius: 8px;
+  color: #fff ;
+  background-color: #2f2f2f;
+  font-size: 13px;
+  line-height: 13px;
+  padding: 15px;
+  margin: 10px 0 20px;
+  box-sizing: border-box;
+  letter-spacing: 0.2px;
+}
+
+.login__edit {
+  width: 396px;
+  display: block;
+  border: none;
+  border-radius: 3px;
+  background-color: #4285f4;
+  font-size: 14px;
+  line-height: 15px;
+  font-weight: 500;
+  margin: 91px auto 16px;
+  color: #fff;
+  cursor: pointer;
+  padding: 15px 0 15px;
+  text-align: center;
+  letter-spacing: 0.5px;
+  transition: all 0.5s ease-out;
+}
+
+.login__edit:hover {
+  background-color: #689DF6;
+}
+
+.login__question-text {
+  font-size: 14px;
+  line-height: 16px;
+  color: #8b8b8b;
+  margin: 17px 0 70px;
+  text-align: center;
+  
+}
+
+.login__enter {
+  text-decoration: none;
+  font-size: 14px;
+  line-height: 16px;
+  cursor: pointer;
+  margin-left: 14px;
+  color: #4285f4;
+  font-weight: 400;
+  transition: all 0.5s ease-out;
+}
+
+.login__enter:hover {
+  color: #689DF6;
+}
+
+@media screen and (max-width: 450px) {
+  .login__logo {
+    display: block;
+    margin: 0 auto;
+  }
+  .login__inner {
+    margin-top: 56px;
+    width: 260px;
+  }
+  .login__title {
+    margin: 50px 0 80px;
+    text-align: center;
+    letter-spacing: 0;
+  }
+  .login__form {
+    width: 260px;
+  }
+  .login__input {
+    width: 260px;
+  }
+  .login__edit {
+    width: 260px;
+    margin: 267px auto 14px;
+    letter-spacing: 0;
+  }
+  .login__question-text,
+  .login__enter {
+    font-size: 12px;
+    margin-bottom: 30px;
+  }
+}
+
+@media screen and (max-width: 320px) {
+  .login__title,
+  .login__edit {
+    letter-spacing: 0;
+  }
+  .login__question-text {
+    margin-top: 0;
+  }
+  .login__enter {
+    margin-left: 5px;
+  }
+}

@@ -1,0 +1,116 @@
+/* technology */
+
+.technology {
+  background-color: #272727;  
+}
+
+.technology__container {
+  max-width: 1280px;
+  max-height: 625px;
+  padding: 84px 70px 102px;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+.technology__title {
+  font-size: 50px;
+  line-height: 58px;
+  font-weight: 400;
+  margin: 90px 0 25px;
+  text-align: center;
+  letter-spacing: -2px;
+}
+
+.technology__text {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 20px;
+  text-align: center;
+  max-width: 460px;
+  min-height: 40px;
+  margin: 0 auto;
+  word-spacing: 2px;
+  letter-spacing: -0.8px;
+}
+
+.technology__list {
+  list-style: none;
+  margin: 100px 0 0;
+  padding: 0;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 16px;
+  display: flex;
+  justify-content: center;
+}
+
+.technology__item {
+  width: 90px;
+  height: 60px;
+  background-color: #303030;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  letter-spacing: -1px;
+  margin: 0 5px;
+}
+
+.technology__item_empty {
+  display: none;
+  background-color: transparent;
+}
+
+.technology__item:last-child {
+  margin-right: 0px;
+}
+
+@media screen and (max-width: 768px) {
+  .technology__container {
+    padding: 74px 50px 55px;
+  }
+  .technology__title {
+    margin: 79px 0 21px;
+  }
+  .technology__text {
+    font-size: 12px;
+    word-spacing: 2.8px;
+    line-height: 18.5px;
+  }
+  .technology__list {
+    margin: 81px 0 36px;
+    font-size: 12px;
+  }
+  .technology__item {
+    width: 84px;
+    height: 57px;
+    letter-spacing: -0.4px;
+  }
+}
+
+@media screen and (max-width: 520px) {
+  .technology__container {
+    padding: 88px 18px 55px;
+  }
+  .technology__title {
+    font-size: 30px;
+    margin: 49px 0 13px;
+    letter-spacing: -1.1px;
+  }
+  .technology__text {
+    letter-spacing: -1.3px;
+    word-spacing: 3.0px;
+    line-height: 16px;
+  }
+  .technology__list {
+    padding: 0 35px;
+    flex-wrap: wrap;
+    margin: 42px 0 36px;
+  }
+  .technology__item {
+    margin: 0 5px 10px 4px;
+  }
+  .technology__item_empty {
+    display: flex;
+  }
+}
