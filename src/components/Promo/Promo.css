@@ -6,7 +6,7 @@
 
 .promo__container {
   max-width: 1280px;
-  padding: 82px 70px 122px;
+  padding: 80px 70px 122px;
   box-sizing: border-box;
   margin: 0 auto;
   position: relative;
@@ -29,7 +29,7 @@
   margin: 0 auto;
   font-weight: 400;
   font-size: 50px;
-  line-height: 58px;
+  line-height: 57px;
   color: #fff;
   text-align: center;
   letter-spacing: -2px;
@@ -37,7 +37,7 @@
 
 @media screen and (max-width: 768px) {
   .promo__container {
-    padding: 219px 30px 240px;
+    padding: 221px 30px 240px;
   }
   .promo__text {
     top: calc(52% - 80px);
@@ -57,6 +57,9 @@
 }
 
 @media screen and (max-width: 520px) {
+  .promo__container {
+    padding: 140px 10px 179px;
+  }
   .promo__img {
     width: 248px;
     height: 248px;

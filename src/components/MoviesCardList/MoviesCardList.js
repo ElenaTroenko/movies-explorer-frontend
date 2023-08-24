@@ -19,12 +19,14 @@ function MoviesCardList({ movies, showOnlySaved, showHearts }) {
 
   const [cardsQuantity, setCardsQuantity] = React.useState(columnsQuantity);
   const [btnMoreClassName, setBtnMoreClassName] = React.useState("card-movie__more-btn");
+  const [boxMoreClassName, setBoxMoreClassName] = React.useState("card-movie__box card-movie__box_off");
     
   // жизненный цикл (определить необходимость отображения
   // кнопки "еще"
   React.useEffect(() => {
     if (cardsQuantity >= movies.length) {
       setBtnMoreClassName("card-movie__more-btn card-movie__more-btn_off");
+      setBoxMoreClassName("card-movie__box");
     }
   }, [cardsQuantity, movies.length]);
 
@@ -55,7 +57,10 @@ function MoviesCardList({ movies, showOnlySaved, showHearts }) {
         })}
 
       </div>
-      <button className={btnMoreClassName} onClick={hendleMore}>Ещё</button>
+      <div className="card-movie__container">
+        <button className={btnMoreClassName} onClick={hendleMore}>Ещё</button>
+        <div className={boxMoreClassName}></div>
+      </div>
     </section>
 
   )

@@ -26,6 +26,18 @@
   color: #fff;
 }
 
+.search-input:hover {
+  outline-color: #24804d;
+  outline-style: solid;
+  outline-width: 1px;
+}
+
+.search-input:focus {
+  outline-color: #3DDC84;
+  outline-style: solid;
+  outline-width: 1px;
+}
+
 .search-input::placeholder {
   color: #fff;
   font-size: 13px;
@@ -43,6 +55,12 @@
   position: absolute;
   right: 6px;
   top: 6px;
+  cursor: pointer;
+  transition: all 0.1s ease-in;
+}
+
+.search__btn:hover {
+  filter: opacity(0.8);
 }
 
 .search__checkbox-container {

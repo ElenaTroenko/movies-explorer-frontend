@@ -12,7 +12,7 @@ function Footer() {
       <div className="footer__container">
         <div className="footer__caption">Учебный проект Яндекс.Практикум х BeatFilm.</div>
         <div className="footer__wrap">
-          <span className="footer__date">&copy;{curentYear}</span>
+          <span className="footer__date">&copy; {curentYear}</span>
           <ul className="footer__list">
             <li className="footer__item">
               <Link to="https://practicum.yandex.ru" target="_blank" className="footer__link">Яндекс.Практикум</Link>

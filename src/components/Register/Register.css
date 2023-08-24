@@ -17,7 +17,6 @@
   font-weight: 500;
   line-height: 27px;
   margin: 39px 0;
-  letter-spacing: 1px;
 }
 
 .register__form {
@@ -47,6 +46,18 @@
   letter-spacing: 0.2px;
 }
 
+.register__input::placeholder {
+  font-size: 13px;
+  color: #fff;
+}
+
+.register__input:active,
+.register__input:focus {
+  outline-color: #3DDC84;
+  outline-style: solid;
+  outline-width: 1px;
+}
+
 .register__edit {
   width: 396px;
   display: block;
@@ -61,12 +72,11 @@
   cursor: pointer;
   padding: 15px 0 15px;
   text-align: center;
-  letter-spacing: 0.5px;
-  transition: all 0.5s ease-out;
+  transition: all 0.1s ease-out;
 }
 
 .register__edit:hover {
-  background-color: #689DF6;
+  opacity: 0.7;
 }
 
 .register__question-text {
@@ -82,14 +92,14 @@
   font-size: 14px;
   line-height: 16px;
   cursor: pointer;
-  margin-left: 14px;
+  margin-left: 8px;
   color: #4285f4;
   font-weight: 400;
-  transition: all 0.5s ease-out;
+  transition: all 0.1s ease-out;
 }
 
 .register__enter:hover {
-  color: #689DF6;
+  opacity: 0.7;
 }
 
 @media screen and (max-width: 450px) {

@@ -11,4 +11,5 @@
   color: white;
   box-sizing: border-box;
   position: relative;
+  max-width: 100%;
 }

@@ -7,7 +7,6 @@
 
 .about-me__container {
   max-width: 1280px;
-  /* max-height: 1079px; */
   padding: 100px 70px 100px;
   margin: 0 auto;
   box-sizing: border-box;
@@ -115,7 +114,7 @@
 
 @media screen and (max-width: 520px) {
   .about-me__container {
-    padding: 114px 14px 70px;
+    padding: 115px 14px 70px;
   }
   .about-me__foto {
     width: 292px;

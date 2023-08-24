@@ -14,11 +14,11 @@ function Profile({logoutHandler}) {
         <form className="profile__form" name="profile-form">
             <label className="profile__placeholder">
               Имя
-              <input  className="profile__input profile__name" name="name" type="text" placeholder="" required></input>
+              <input  className="profile__input profile__name" name="name" type="text" placeholder="Виталий" minLength="2" maxLength="40" required></input>
             </label>
             <label className="profile__placeholder">
                 E-mail
-                <input  className="profile__input profile__email" name="email" type="email" placeholder="" required></input>
+                <input  className="profile__input profile__email" name="email" type="email" placeholder="pochta@yandex.ru"  minLength="5" required></input>
               </label>
           <button className="profile__edit">Редактировать</button>
           <Link onClick={handleLogout} to="/signin" className="profile__exit">Выйти из аккаунта</Link>

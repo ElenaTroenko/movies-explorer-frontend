@@ -29,8 +29,8 @@
   max-width: 460px;
   min-height: 40px;
   margin: 0 auto;
-  word-spacing: 2px;
-  letter-spacing: -0.8px;
+  word-spacing: 2.7px;
+  letter-spacing: -0.9px;
 }
 
 .technology__list {
@@ -112,5 +112,11 @@
   }
   .technology__item_empty {
     display: flex;
+  }
+}
+
+@media screen and (max-width: 385px) {
+  .technology__list {
+    padding: 0 40px;
   }
 }

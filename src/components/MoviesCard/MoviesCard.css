@@ -13,6 +13,7 @@
   border-radius: 6px;
   font-size: 0;
   position: relative;
+  box-shadow: 0px 4px 10px 0px rgba(0, 0, 0, 0.08);
 }
 
 .card-movie__location {
@@ -53,6 +54,7 @@
   width: 14px;
   height: 12px;
   background-size: cover;
+  margin-right: 12px;
 }
 
 .card-movie__item:hover .card-movie__button-delete, 
@@ -95,7 +97,15 @@
 
 @media screen and (max-width: 768px) {
   .card-movie__location {
-    padding: 11px 12px 15px 14px;
+    padding: 13px 12px 15px 14px;
+  }
+  .card-movie__img {
+    max-width: 100%;
+    height: auto;
+  }
+  .card-movie__button-heart,
+  .card-movie__button-heart_filled {
+    margin-right: 12px;
   }
 }
 
@@ -103,6 +113,11 @@
   .card-movie__item {
     justify-self: center;
   }
+  .card-movie__item {
+    max-width: 339px;
+    max-height: 262px;
+  }
+
 }
 
 @media screen and (max-width: 450px) {
@@ -112,7 +127,7 @@
   }
   .card-movie__item {
     max-width: 300px;
-    max-height: 221px;
+    max-height: 237px;
   }
   .card-movie__title {
     font-size: 12px;
@@ -126,6 +141,9 @@
   }
   .card-movie__button-delete {
     width: 37px;
-    height: 17px;
+    height: 10px;
+  }
+  .card-movie__inner {
+    gap: 14px;
   }
 }
