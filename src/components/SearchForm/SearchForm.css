@@ -60,7 +60,7 @@
 }
 
 .search__btn:hover {
-  filter: opacity(0.8);
+  opacity: 0.8;
 }
 
 .search__checkbox-container {
@@ -131,7 +131,7 @@
 @media screen and (max-width: 768px) {
   .search__container {
     padding: 0 30px;
-    margin: 80px auto 0;
+    margin: 78px auto 0;
   }
   .search-input {
     width: 708px;

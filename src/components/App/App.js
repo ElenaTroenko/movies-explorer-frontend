@@ -98,7 +98,6 @@ function App() {
               <NotFound />
             </Main>
           } />
-        
         </Routes>
       </LoadingContext.Provider>
     </div>

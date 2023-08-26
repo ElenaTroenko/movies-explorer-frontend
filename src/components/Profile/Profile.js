@@ -8,7 +8,7 @@ function Profile({logoutHandler}) {
   }
 
   return (
-    <main class="content">
+    
       <div className="profile">
         <h2 className="profile-name">Привет, Виталий!</h2>
         <form className="profile__form" name="profile-form">
@@ -24,7 +24,6 @@ function Profile({logoutHandler}) {
           <Link onClick={handleLogout} to="/signin" className="profile__exit">Выйти из аккаунта</Link>
         </form>
       </div>
-    </main>
 
   )
 

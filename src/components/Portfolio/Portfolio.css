@@ -61,6 +61,7 @@
   .portfolio__item {
     font-size: 28px;
     line-height: 47px;
+    margin-bottom: 23px;
   }
   .portfolio__link {
     line-height: 46px;
@@ -89,24 +90,21 @@
     width: 11px;
     height: 35px;
   }
-}
-
-@media screen and (max-width: 400px) {
   .portfolio__link {
     font-size: 18px;
     line-height: 39px;
     letter-spacing: -0.7px;
   }
+}
 
+@media screen and (max-width: 400px) {
   .portfolio__list {
     margin: 36px 0 0;
   }
-
   .portfolio__item {
     padding-bottom: 13px;
     margin-bottom: 15px;
   }
-
   .portfolio__image {
     padding: 0 5px;
   }

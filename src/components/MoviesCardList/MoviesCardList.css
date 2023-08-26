@@ -59,7 +59,7 @@
     max-width: 768px;
   }
   .card-movie__container {
-    margin: 76px auto 77px;
+    margin: 80px auto 75px;
     padding: 0 30px;
   }
 }
@@ -69,7 +69,7 @@
     margin-top: 80px;
   }
   .card-movie__box {
-    height: 15px;
+    height: 10px;
   }
 }
 
@@ -94,6 +94,7 @@
   .card-movie__container {
     padding: 0 10px;
     max-width: 300px;
+    margin: 76px auto 77px;
   }
   .card-movie__box {
     height: 10px;

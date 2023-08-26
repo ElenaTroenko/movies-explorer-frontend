@@ -101,17 +101,23 @@
     margin-right: 38px;
   }
   .about-project__description {
-    padding-bottom: 95px;
+    padding: 52px 0 93px;
   }
 }
 
-@media screen and (max-width: 520px) {
+@media screen and (max-width: 590px) {
   .about-project__container {
     padding: 55px 19px 84px;
   }
   .about-project__description {
     flex-direction: column;
-    padding: 45px 0 110px;
+    padding: 45px 0 5px;
+  }
+  .about-project__description-container {
+    margin: 0 auto;
+  }
+  .about-project__description-container:last-child {
+    margin: 0 auto;
   }
   .about-project__description-subtitle {
     font-size: 18px;
@@ -125,10 +131,10 @@
     line-height: 16px;
     margin-bottom: 56px;
   }
-  .about-project__description {
-    padding: 45px 0 5px;
+  .about-project-progress {
+    justify-content: center;
   }
-  .about-project-progress__week {
+ .about-project-progress__week {
     width: 99px;
     font-size: 11px;
     height: 35px;
@@ -141,5 +147,11 @@
   .about-project-progress__month_text_gray,
   .about-project-progress__week_text_gray {
     line-height: 12px;
+  }
+}
+
+@media screen and (max-width: 320px) {
+  .about-project__description-container {
+    width: 100%;
   }
 }

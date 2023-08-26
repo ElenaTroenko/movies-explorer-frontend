@@ -105,7 +105,11 @@
   }
   .card-movie__button-heart,
   .card-movie__button-heart_filled {
-    margin-right: 12px;
+    margin-right: 10px;
+    margin-top: 3px;
+  }
+  .card-movie__time {
+    padding: 0 14px 16px;
   }
 }
 

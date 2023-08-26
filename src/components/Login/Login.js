@@ -23,8 +23,8 @@ function Login() {
           <button className="login__edit">Войти</button>
           <p className="login__question-text">Еще не зарегистрированы?<Link to="/signup" className="login__enter">Регистрация</Link></p>
         </form>
-    </div>
-  </section>
+      </div>
+    </section>
   
   )
 

@@ -76,6 +76,8 @@
     font-size: 12px;
     word-spacing: 2.8px;
     line-height: 18.5px;
+    max-width: 457px;
+    letter-spacing: -0.8px;
   }
   .technology__list {
     margin: 81px 0 36px;
@@ -118,5 +120,8 @@
 @media screen and (max-width: 385px) {
   .technology__list {
     padding: 0 40px;
+  }
+  .technology__title {
+    margin: 49px 0 15px;
   }
 }

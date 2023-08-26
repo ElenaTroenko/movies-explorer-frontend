@@ -66,7 +66,7 @@
     margin-top: 66px;
   }
   .about-me__container {
-    padding: 73px 50px 91px;
+    padding: 71px 50px 91px;
   }
   .about-me__title {
     font-size: 40px;
@@ -92,7 +92,7 @@
 }
 
 
-@media screen and (max-width: 720px) {
+@media screen and (max-width: 750px) {
   .about-me__description {
     display: flex;
     justify-content: center;
@@ -103,6 +103,7 @@
   .about-me__text {
     width: 100%;
     margin-bottom: 40px;
+    margin-right: 0;
   }
   .about-me__wrap {
     text-align: center;

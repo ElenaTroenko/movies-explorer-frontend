@@ -49,7 +49,7 @@ export const movies = [
   },
   {
     image: image1,
-    title: 'Gimme Danger: история Игги и The Stooge...',
+    title: 'Gimme Danger: история Игги',
     saved: false,
     duration: '1ч 59м',
   },
@@ -121,7 +121,7 @@ export const movies = [
   },
   {
     image: image1,
-    title: 'Gimme Danger: история Игги и The Stooge...',
+    title: 'Gimme Danger: история Игги',
     saved: false,
     duration: '1ч 59м',
   },
