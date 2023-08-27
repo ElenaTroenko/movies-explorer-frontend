@@ -1,0 +1,129 @@
+.profile-name {
+  font-size: 24px;
+  font-weight: 500;
+  line-height: 26px;
+  text-align: center;
+}
+
+.profile {
+  width: 1280px;
+  max-width: 100%;
+  padding: 0 70px;
+  box-sizing: border-box;
+  margin: 73px auto 0;
+}
+
+.profile__form {
+  max-width: 410px;
+  margin: 123px auto 0;
+}
+
+.profile__input {
+  display: block;
+  width: 100%;
+  border: none;
+  color: #fff ;
+  background-color: transparent;
+  text-align: end;
+  z-index: 1;
+  outline: none;
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  padding-bottom: 16px;
+}
+
+.profile__input::placeholder {
+  font-size: 11px;
+  color: #fff;
+}
+
+.profile__input:focus,
+.profile__input:active {
+  border-bottom: 1px solid #3DDC84;
+}
+
+.profile__name {
+  border-bottom: 1px solid #424242;
+  margin-bottom: 16px;
+}
+
+.profile__edit {
+  display: block;
+  border: none;
+  background-color: transparent;
+  font-size: 13px;
+  line-height: 15px;
+  font-weight: 400;
+  margin: 184px auto 16px;
+  color: #fff;
+  cursor: pointer;
+  transition: all 0.1s ease-in;
+}
+
+.profile__edit:hover {
+  opacity: 0.7;
+}
+
+.profile__exit {
+  text-decoration: none;
+  display: block;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 15px;
+  color: #ee3465;
+  padding-bottom: 270px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.1s ease-out;
+}
+
+.profile__exit:hover {
+  opacity: 0.7;
+}
+
+.profile__placeholder {
+  background-color: transparent;
+  font-size: 11px;
+  font-weight: 500;
+  line-height: 13px;
+  color: #fff;
+  z-index: 0;
+  position: relative;
+  height: 50px;
+  display: block;
+}
+
+@media screen and (max-width: 1199px) {
+  .profile{
+    padding: 0 30px;
+    margin: 234px auto 0;
+  }
+  .profile__form {
+    margin: 97px auto 0;
+  }
+  .profile__edit {
+    margin: 172px auto 16px;
+  }
+}
+
+@media screen and (max-width: 450px) {
+  .profile {
+    margin: 68px auto 0;
+  }
+  .profile__form {
+    width: 100%;
+    margin: 81px auto 0;
+  }
+  .profile__edit {
+    margin: 340px auto 16px;
+    font-size: 12px;
+  }
+  .profile__exit {
+    font-size: 12px;
+  }
+  .profile__input,
+  .profile__name {
+    max-width: 100%;
+  }
+}
