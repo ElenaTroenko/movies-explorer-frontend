@@ -1,26 +1,51 @@
 import './MoviesCard.css';
+import React from 'react';
+import { BASE_URLS } from '../../utils/constants';
+import { durationToHuman } from '../../utils/durationToHuman';
+import { Link } from 'react-router-dom';
 
 
-function MoviesCard({ movie, showHearts }) {
+const MoviesCard = ({ movie, showHearts, onLike, onDislike, inSaved }) => {
 
-  const buttonHeartClassName = showHearts
-    ? (movie.saved ? "card-movie__button-heart_filled" : "card-movie__button-heart")
-    : "card-movie__button-delete"
+  // Стэйты
+  const [saved, setSaved] = React.useState(inSaved);
 
+  const imageSrc = movie.image.url
+  ? `${BASE_URLS.moviesBaseUrl}${movie.image.url}`
+  : movie.image
+
+  const handleClick = () => {
+    showHearts
+    ? saved
+      ? onDislike(movie, setSaved)
+      : onLike(movie, setSaved)
+    : onDislike(movie, setSaved)
+  }
+  
   return (
 
     <article className="card-movie__item">
-      <img className="card-movie__img" src={movie.image}
-        alt={`Изображение фильма ${movie.title}`} />
-        <div className="card-movie__location">
-          <h2 className="card-movie__title">{movie.title}</h2>
-          <button className={buttonHeartClassName} type="button"></button>
-        </div>
-        <div className="card-movie__time">{movie.duration}</div>
+      <Link to={movie.trailerLink} target='_blank'>
+        <img 
+          className="card-movie__img" src={imageSrc}
+          alt={`Изображение фильма ${movie.nameRU}`}
+        />
+      </Link>
+      <div className="card-movie__location">
+        <h2 className="card-movie__title">{movie.nameRU}</h2>
+        <button onClick={handleClick} className={
+          showHearts
+          ? saved
+            ? "card-movie__button-heart_filled"
+            : "card-movie__button-heart"
+          : "card-movie__button-delete"
+          } type="button"></button>
+      </div>
+      <div className="card-movie__time">{durationToHuman(movie.duration)}</div>
     </article>
 
   )
-
 }
+
 
 export default MoviesCard;

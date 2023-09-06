@@ -3,10 +3,10 @@ import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 
 
-function NotFound() {
+const NotFound = () => {
   const navigate = useNavigate();
 
-  function handleBack() {
+  const handleBack = () => {
     navigate(-1);
   }
 
@@ -21,7 +21,7 @@ function NotFound() {
     </section>
 
   )
-
 }
+
 
 export default NotFound;

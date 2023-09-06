@@ -12,4 +12,14 @@
   box-sizing: border-box;
   position: relative;
   max-width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.validate-error {
+  color: #ee3465;
+  font-size: 11px;
+  font-weight: 400;
+  margin-top: 3px;
+  margin-bottom: 10px;
 }

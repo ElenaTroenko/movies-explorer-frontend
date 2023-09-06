@@ -29,6 +29,9 @@
   font-weight: 500;
   line-height: 16px;
   margin: 0;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 }
 
 .card-movie__button-heart_filled {
@@ -60,7 +63,7 @@
 .card-movie__item:hover .card-movie__button-delete, 
 .card-movie__item:focus .card-movie__button-delete {
     display: block;
-  }
+}
 
 
 .card-movie__button-delete {
@@ -101,7 +104,6 @@
   }
   .card-movie__img {
     max-width: 100%;
-    height: auto;
   }
   .card-movie__button-heart,
   .card-movie__button-heart_filled {

@@ -3,7 +3,7 @@ import aboutMeImage from '../../images/arrow.svg';
 import { Link } from 'react-router-dom';
 
 
-function Portfolio() {
+const Portfolio = () => {
 
   return (
 
@@ -31,7 +31,7 @@ function Portfolio() {
     </section>
 
   )
-
 }
+
 
 export default Portfolio;

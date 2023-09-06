@@ -1,7 +1,7 @@
 import './Promo.css';
 
 
-function Promo() {
+const Promo = () => {
 
   return (
 
@@ -13,7 +13,7 @@ function Promo() {
       </div>
       
   )
-
 }
+
 
 export default Promo;

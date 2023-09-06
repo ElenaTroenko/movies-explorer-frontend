@@ -2,7 +2,7 @@ import './NavTab.css';
 import { HashLink as Link } from 'react-router-hash-link';
 
 
-function NavTab() {
+const NavTab = () => {
 
   return (
 
@@ -21,7 +21,7 @@ function NavTab() {
     </nav>
 
   )
-
 }
+
 
 export default NavTab;

@@ -1,6 +1,6 @@
 import './Techs.css';
 
-function Techs() {
+const Techs = () => {
 
   return (
 
@@ -22,12 +22,11 @@ function Techs() {
           <li className="technology__item technology__item_empty"></li>
           <li className="technology__item technology__item_empty"></li>
         </ul>  
-
       </div>
     </section>
 
   )
-  
 }
+
 
 export default Techs;

@@ -1,10 +1,10 @@
 import './Navigation.css';
 import { Link } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
-import { navLinks } from '../../utils/constants';
+import { NAV_LINKS } from '../../utils/constants';
 
 
-function Navigation({ loggedIn }) {
+const Navigation = ({ loggedIn }) => {
   const location = useLocation();
 
   return (
@@ -12,9 +12,10 @@ function Navigation({ loggedIn }) {
     <nav className="navigation">
       { loggedIn &&
         <>
-          {navLinks.slice(1,3).map((navLink) => {
+          {NAV_LINKS.slice(1,3).map((navLink) => {
             return (
               <Link
+                key={navLink.text}
                 to={navLink.link}
                 className={navLink.link === location.pathname
                   ? "navigation__link navigation__link_active"
@@ -30,7 +31,7 @@ function Navigation({ loggedIn }) {
     </nav>
 
   )
-
 }
+
 
 export default Navigation;

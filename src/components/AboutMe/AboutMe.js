@@ -4,10 +4,10 @@ import SectionTitle from '../SectionTitle/SectionTitle';
 import { Link } from 'react-router-dom';
 
 
-function AboutMe() {
+const AboutMe = () => {
 
   return (
-
+    
     <section id="about_me" className="about-me">
       <div className="about-me__container">
         <SectionTitle title="Студент" />
@@ -28,8 +28,7 @@ function AboutMe() {
     </section>
 
   )
-
 }
 
-export default AboutMe;
 
+export default AboutMe;
