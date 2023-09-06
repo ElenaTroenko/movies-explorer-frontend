@@ -37,7 +37,6 @@ export const BASE_URLS = {
   mainApiBaseUrl: 'http://127.0.0.1:3000',
   moviesApiBaseUrl: 'https://api.nomoreparties.co/beatfilm-movies',
   moviesBaseUrl: 'https://api.nomoreparties.co',
-  // mainApiBaseUrl: 'https://api.et-movies.nomoreparties.co/',
 }
 
 

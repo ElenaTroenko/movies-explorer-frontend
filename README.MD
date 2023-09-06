@@ -5,3 +5,6 @@ movies-explorer-frontend
 Выбранный макет: dark-3.
 
 Адрес репозитория: https://github.com/ElenaTroenko/movies-explorer-frontend.git
+
+Ссылка на пул реквест: https://github.com/ElenaTroenko/movies-explorer-frontend/pull/2
+Проект на VDS: https://et-movies.nomoreparties.co
