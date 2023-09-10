@@ -63,7 +63,6 @@ const MoviesCardList = ({ showOnlySaved, movies, onLike, onDislike, errorMsg }) 
   const hendleMore = () => {
     setCardsQuantity(cardsQuantity + addedCardsQuantity);
   }
-
   
   if (errorMsg) {
     return (
@@ -71,12 +70,12 @@ const MoviesCardList = ({ showOnlySaved, movies, onLike, onDislike, errorMsg }) 
     )
   }
 
-
   return (
 
     <section className="card-movie" aria-label="карточки с фильмами">
       <div className="card-movie__inner">
         {showOnlySaved
+        
         ? movies && movies.map((movieElement) => {
           return (
             <MoviesCard 
@@ -87,7 +86,7 @@ const MoviesCardList = ({ showOnlySaved, movies, onLike, onDislike, errorMsg }) 
             />
           )
         })
-        : movies.slice(0, cardsQuantity).map((movieElement) => { 
+        : movies && movies.slice(0, cardsQuantity).map((movieElement) => { 
           return (
             <MoviesCard 
               movie={movieElement}

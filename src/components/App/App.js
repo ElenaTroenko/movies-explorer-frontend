@@ -101,6 +101,11 @@ const App = () => {
       .then((savedMoviesFromApi) => {
         setSavedMovies(savedMoviesFromApi);
         setFilteredSavedMovies(savedMoviesFromApi);
+
+        setLastSavedSearch({
+          search: '',
+          shortsOnly: false,
+        })
       })
       .catch((err) => logMessage(err.message));
     }
