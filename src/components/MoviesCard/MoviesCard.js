@@ -6,9 +6,8 @@ import { Link } from 'react-router-dom';
 
 
 const MoviesCard = ({ movie, showHearts, onLike, onDislike, inSaved }) => {
-
   // Стэйты
-  const [saved, setSaved] = React.useState(inSaved);
+  const [saved, setSaved] = React.useState(inSaved ? inSaved : false);
 
   const imageSrc = movie.image.url
   ? `${BASE_URLS.moviesBaseUrl}${movie.image.url}`
@@ -19,7 +18,7 @@ const MoviesCard = ({ movie, showHearts, onLike, onDislike, inSaved }) => {
     ? saved
       ? onDislike(movie, setSaved)
       : onLike(movie, setSaved)
-    : onDislike(movie, setSaved)
+    : onDislike(movie)
   }
   
   return (

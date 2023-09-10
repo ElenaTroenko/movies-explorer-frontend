@@ -63,6 +63,15 @@
   opacity: 0.8;
 }
 
+.search__btn:disabled {
+  background-color: #333;
+  cursor: not-allowed;
+}
+
+.search__btn:disabled:hover {
+  opacity: 1;
+}
+
 .search__checkbox-container {
   position: relative;
   margin: 41px auto 0;

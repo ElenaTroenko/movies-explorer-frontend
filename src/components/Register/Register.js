@@ -45,7 +45,7 @@ const Register = ({ onRegister }) => {
       formValues.password,
       {required: true, minLength: 8},
       errorsOnPasswordField,
-    );    
+    );
     
     changedFields.name && setNameError(validateName.errorMessage)
     changedFields.email && setEmailError(validateEmail.errorMessage)
@@ -86,17 +86,17 @@ const Register = ({ onRegister }) => {
         <form onSubmit={handleSubmit} className="register__form" name="register-form">
           <label className="register__labal">Имя
             <input onChange={handleChange} className="register__input register__name" name="name" type="text" placeholder="Ваше Имя" minLength="2" maxLength="40"
-                required value={formValues.name}></input>
+                required value={formValues.name} disabled={isLoading}></input>
             <div className="validate-error">{nameError}</div>
           </label>
           <label className="register__labal">E-mail
             <input onChange={handleChange} className="register__input register__email" name="email" type="email" minLength="5" placeholder="pochta@yandex.ru"
-                required value={formValues.email}></input>
+                required value={formValues.email} disabled={isLoading}></input>
             <div className="validate-error">{emailError}</div>
           </label>
           <label className="register__labal">Пароль
             <input onChange={handleChange} className="register__input register__password" name="password" type="password"  minLength="6" placeholder="Пароль"
-                required value={formValues.password}></input>
+                required value={formValues.password} disabled={isLoading}></input>
           <div className="validate-error">{passwordError}</div>
           </label>
           <div className="register__error">{errorMsg}</div>

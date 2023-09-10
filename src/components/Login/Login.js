@@ -75,16 +75,16 @@ const Login = ({ onLogin }) => {
         <form onSubmit={handleSubmit} className="login__form" name="login-form">
           <label className="login__label">E-mail
             <input onChange={handleChange} className="login__input register__email" name="email" type="email"
-              minLength="5" placeholder="pochta@yandex.ru" required value={formValues.email}></input>
+              minLength="5" placeholder="pochta@yandex.ru" required value={formValues.email} disabled={isLoading}></input>
             <div className="validate-error">{emailError}</div>
           </label>
           <label className="login__label">Пароль
             <input onChange={handleChange} className="login__input register__password" name="password" type="password"
-              minLength="6" placeholder="Пароль"  value={formValues.name}></input>
+              minLength="6" placeholder="Пароль" value={formValues.name} disabled={isLoading}></input>
             <div className="validate-error">{passwordError}</div>
           </label>
           <div className="login__error">{errorMsg}</div>
-          <button className="login__edit" >{buttonText}</button>
+          <button className="login__edit" disabled={!formIsValid || isLoading}>{buttonText}</button>
           <p className="login__question-text">Еще не зарегистрированы?<Link to="/signup" className="login__enter">Регистрация</Link></p>
         </form>
       </div>

@@ -13,7 +13,6 @@ export const NAV_LINKS = [
   }
 ]
 
-
 export const SCREEN_RULES = {
   FULL: {
     width: 1920,
@@ -32,13 +31,13 @@ export const SCREEN_RULES = {
   },
 }
 
-
 export const BASE_URLS = {
   mainApiBaseUrl: 'http://127.0.0.1:3000',
   moviesApiBaseUrl: 'https://api.nomoreparties.co/beatfilm-movies',
   moviesBaseUrl: 'https://api.nomoreparties.co',
 }
 
+export const SHORTS_DURATION = 40;
 
 export const EMAIL_REGEXP = /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/iu;
 export const NAME_REGEXP = /^[а-яёa-z\-\s]*?$/i;

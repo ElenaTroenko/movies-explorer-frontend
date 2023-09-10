@@ -4,13 +4,13 @@ import React from 'react';
 import { SCREEN_RULES } from '../../utils/constants';
 
 
-const MoviesCardList = ({ showOnlySaved, movies, onLike, onDislike, savedMovies, errorMsg }) => {
+const MoviesCardList = ({ showOnlySaved, movies, onLike, onDislike, errorMsg }) => {
   // стэйты
   const [currentScreenWidth, setCurrentScreenWidth] = React.useState(0);
   const [addedCardsQuantity, setAddedCardsQuantity] = React.useState(0);
   const [cardsQuantity, setCardsQuantity] = React.useState(0);
-  const [btnMoreClassName, setBtnMoreClassName] = React.useState("card-movie__more-btn");
-  const [boxMoreClassName, setBoxMoreClassName] = React.useState("card-movie__box card-movie__box_off");
+  const [btnMoreClassName, setBtnMoreClassName] = React.useState("card-movie__more-btn card-movie__more-btn_off");
+  const [boxMoreClassName, setBoxMoreClassName] = React.useState("card-movie__box");
 
   React.useEffect(() => {
     handleResize();
@@ -19,6 +19,7 @@ const MoviesCardList = ({ showOnlySaved, movies, onLike, onDislike, savedMovies,
     return function exit() {
       window.removeEventListener('resize', handleResize);
     }
+
   }, [])
   
   React.useEffect(() => {
@@ -39,10 +40,14 @@ const MoviesCardList = ({ showOnlySaved, movies, onLike, onDislike, savedMovies,
   // жизненный цикл (определить необходимость отображения
   // кнопки "еще"
   React.useEffect(() => {
-    if (cardsQuantity >= movies.length || showOnlySaved) {
+    if (!showOnlySaved && cardsQuantity < movies.length) {
+      setBtnMoreClassName("card-movie__more-btn");
+      setBoxMoreClassName("card-movie__box card-movie__box_off");
+    } else {
       setBtnMoreClassName("card-movie__more-btn card-movie__more-btn_off");
       setBoxMoreClassName("card-movie__box");
     }
+
   }, [cardsQuantity]);
 
   const handleResize = () => {
@@ -58,46 +63,39 @@ const MoviesCardList = ({ showOnlySaved, movies, onLike, onDislike, savedMovies,
   const hendleMore = () => {
     setCardsQuantity(cardsQuantity + addedCardsQuantity);
   }
+
   
-  if (showOnlySaved && errorMsg) {
+  if (errorMsg) {
     return (
       <div className="movies__empty">{errorMsg}</div>
     )
   }
 
-  if (!showOnlySaved && errorMsg) {
-    return (
-      <div className="movies__empty">{errorMsg}</div>
-    )
-  }
 
   return (
 
     <section className="card-movie" aria-label="карточки с фильмами">
       <div className="card-movie__inner">
         {showOnlySaved
-        ? savedMovies && savedMovies.map((savedMovie) => {
+        ? movies && movies.map((movieElement) => {
           return (
             <MoviesCard 
-              movie={savedMovie}
+              movie={movieElement}
               showHearts={false}
-              key={savedMovie.movieId}
+              key={movieElement.movieId}
               onDislike={onDislike}
             />
           )
         })
-        : movies && movies.slice(0, cardsQuantity).map((movie) => { 
-          const inSaved = savedMovies.filter((savedMovieElement) => {
-              return savedMovieElement.movieId === movie.id
-          }).length > 0
+        : movies.slice(0, cardsQuantity).map((movieElement) => { 
           return (
             <MoviesCard 
-              movie={movie}
+              movie={movieElement}
               showHearts={true}
-              key={movie.id}
+              key={movieElement.id}
               onLike={onLike}
               onDislike={onDislike}
-              inSaved={inSaved}
+              inSaved={movieElement.inSaved}
             />
             )
           })

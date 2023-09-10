@@ -5,6 +5,7 @@ import Header from '../Header/Header';
 import Main from '../Main/Main';
 import Footer from '../Footer/Footer';
 import Movies from '../Movies/Movies';
+import SavedMovies from '../SavedMovies/SavedMovies';
 import Profile from '../Profile/Profile';
 import Register from '../Register/Register';
 import Login from '../Login/Login';
@@ -18,49 +19,66 @@ import Techs from '../Techs/Techs';
 import AboutMe from '../AboutMe/AboutMe';
 import Portfolio from '../Portfolio/Portfolio';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
-import { useNavigate } from 'react-router-dom';
+import { Navigate, useNavigate, useLocation } from 'react-router-dom';
 import mainApi from '../../utils/MainApi';
 import moviesApi from '../../utils/MoviesApi';
 import { errorsOnSearch } from '../../utils/messages';
-import { BASE_URLS } from '../../utils/constants';
-import { Navigate } from 'react-router-dom';
+import { BASE_URLS, SHORTS_DURATION } from '../../utils/constants';
 
 
 const App = () => {
+  const location = useLocation();
+
   // стэйты
   const [loggedIn, setLoggedIn] = React.useState(false);
-  const [isLoading, setIsLoading] = React.useState(false);
+  const [isLoading, setIsLoading] = React.useState(true);
   const [currentUser, setCurrentUser] = React.useState({});
   const [currentUserOptions, setCurrentUserOptions] = React.useState({});
   const [movies, setMovies] = React.useState([]);
   const [savedMovies, setSavedMovies] = React.useState([]);
+  const [filteredMovies, setFilteredMovies] = React.useState('');
+  const [filteredSavedMovies, setFilteredSavedMovies] = React.useState('');
+  const [lastSavedSearch, setLastSavedSearch] = React.useState({});
   const [searchErrorMsg, setSearchErrorMsg] = React.useState('');
   const [savedSearchErrorMsg, setSavedSearchErrorMsg] = React.useState('');
-  
+  const [registerErrorMsg, setRegisterErrorMsg] = React.useState('');
+  const [registerOkMsg, setRegisterOkMsg] = React.useState('');
+
   // хук useNavigate
   const navigate = useNavigate();
   
-  // Жизненный цикл ***************************************
+  // Жизненный цикл
   React.useEffect(() => {
     let token = getUserToken();
     if (token) {
       mainApi.checkToken(token)
       .then((user) => {
         if (user) {
-          
           setCurrentUser(user);
-          
           // установить информацию об опциях пользователя и фильмах
           const options = getUserOptions();
           setCurrentUserOptions(options);
-          setMovies(options.search.movies)
 
+          setMovies(options.movies);
+          setFilteredMovies(
+            filterMovies(
+              options.movies,
+              {
+                search: options.search.search,
+                shortsOnly: options.search.shortsOnly,
+              }
+            )
+          );
           setLoggedIn(true);
         }
       })
-      .catch((err) => logMessage(err.message));
+      .catch((err) => logMessage(err.message))
+      .finally(() => setIsLoading(false));
+    } else {
+      setIsLoading(false);
     }
   }, []);
+
 
   React.useEffect(() => {
     // усли есть логин пользователя - загрузить его 
@@ -69,6 +87,7 @@ const App = () => {
       mainApi.getMovies()
       .then((savedMoviesFromApi) => {
         setSavedMovies(savedMoviesFromApi);
+        setFilteredSavedMovies(savedMoviesFromApi);
       })
       .catch((err) => logMessage(err.message));
     } else {
@@ -76,9 +95,22 @@ const App = () => {
     }
   }, [loggedIn])
 
-  const handleLike = ({ image, country, director, 
-    duration, description, nameEN, nameRU, thumbnail,
-    trailerLink, year, id }) => {
+  React.useEffect(() => {
+    if (location.pathname === '/saved-movies') {
+      mainApi.getMovies()
+      .then((savedMoviesFromApi) => {
+        setSavedMovies(savedMoviesFromApi);
+        setFilteredSavedMovies(savedMoviesFromApi);
+      })
+      .catch((err) => logMessage(err.message));
+    }
+  }, [location]);
+
+  // хэндлер лайка 
+  const handleLike = (movie, setterCallBack) => {
+    const { image, country, director, 
+      duration, description, nameEN, nameRU, thumbnail,
+      trailerLink, year, id } = movie;
 
     const newMovie = {
       image: `${BASE_URLS.moviesBaseUrl}${image.url}`,
@@ -95,11 +127,23 @@ const App = () => {
     } 
   
     mainApi.createMovie(newMovie)
-    .then((newMovie) => {
-      mainApi.getMovies()
-      .then((newSavedMovies) => {
-        setSavedMovies(newSavedMovies)
-      })
+    .then((newMovieFromApi) => {
+
+      // *** Изменение [movies] ***
+      // установить свойство inSaved в элементе массива movies
+      movie.inSaved = true
+      // сохранить userOptions
+      currentUserOptions['movies'] = movies;  // изменяем свойство
+      saveUserOptions();                      // сохраняем изм. опции
+
+      // *** Изменение [savedMmovies] ***
+      // добавить в список сохр. фильмов новый (в стэйт)
+      savedMovies.push(newMovieFromApi)
+
+      setSavedSearchErrorMsg('');
+
+      // установить сердечко в карточке
+      setterCallBack(true);
     })
     .catch((err) => handleErrorRes(err))
   }
@@ -111,31 +155,72 @@ const App = () => {
 
     mainApi.deleteMovie(_id)
     .then(() => {
-      // setterCallBack(false);
-      
-      mainApi.getMovies()
-      .then((newSavedMovies) => {
-        setSavedMovies(newSavedMovies)
-      })
+      // *** Изменение [movies] ***
+      // установить свойство inSaved
+      movie.inSaved = false;
+      // сохранить userOptions
+      currentUserOptions['movies'] = movies;  // изменяем свойство
+      saveUserOptions();                      // сохраняем изм. опции
+
+      if (setterCallBack) {
+        setterCallBack(false);
+      }
+     
     })
     .catch((err) => handleErrorRes(err))
 
   }
 
-  const handleDelete = (movie, setterCallBack) => {
+  const handleDelete = (movie) => {
     const _id = movie._id;
+    const id = movie.movieId;
 
     mainApi.deleteMovie(_id)
     .then(() => {
-      // setterCallBack(false);
-      
-      mainApi.getMovies()
-      .then((newSavedMovies) => {
+      const newSavedMovies = savedMovies.filter(
+        (savedMovieElement) => {
+          return savedMovieElement.movieId !== id
+        }
+      )
+
+        // *** Изменение [savedMovies] ***
         setSavedMovies(newSavedMovies)
-      })
+
+        // *** Изменение [filteredSavedMovies] ***
+        filterSavedMovies(newSavedMovies);
+       
+        // *** Изменение [movies] ***
+        // установить свойство inSaved в элементе массива movies
+        movies.filter((movieElement)=>movieElement.id === id)[0].inSaved = false
+        // сохранить userOptions
+        currentUserOptions['movies'] = movies;  // изменяем свойство
+        saveUserOptions();                      // сохраняем изм. опции
+
+        // *** Изменение [filteredMovies] ***
+        setFilteredMovies(filterMovies(movies, {
+          search: currentUserOptions.search.search,
+          shortsOnly: currentUserOptions.search.shortsOnly,
+        }))
+
     })
     .catch((err) => handleErrorRes(err))
+  }
 
+  const filterSavedMovies = (newSavedMovies) => {
+    // отфильтровать
+    const newFilteredSavedMovies = filterMovies(
+      newSavedMovies ? newSavedMovies : savedMovies,
+      { search: lastSavedSearch.search ? lastSavedSearch.search : '',
+        shortsOnly: lastSavedSearch.shortsOnly ? lastSavedSearch.shortsOnly : false }
+    )
+    // - после фильтрации -
+    if (newFilteredSavedMovies.length === 0 && lastSavedSearch.savedSearch) {
+      setSavedSearchErrorMsg(errorsOnSearch.NOT_FOUND_ERR);
+    } else {
+      // *** Изменение [filteredSavedMovies] ***
+      // сохраниеть отфильтрованные сохраненные фильмы
+      setFilteredSavedMovies(newFilteredSavedMovies)
+    }
   }
 
   // Хэндлер логина
@@ -158,7 +243,16 @@ const App = () => {
           // установить информацию об опциях пользователя и фильмах
           const options = getUserOptions();
           setCurrentUserOptions(options);
-          setMovies(options.search.movies)
+          setMovies(options.movies)
+          setFilteredMovies(
+            filterMovies(
+              options.movies,
+              {
+                search: options.search.search,
+                shortsOnly: options.search.shortsOnly,
+              }
+            )
+          );
         })
 
         setLoggedIn(true);
@@ -178,7 +272,7 @@ const App = () => {
         showMessage({
           message: error.message,
           type: 'error',
-          errorCallBack: errorCallBack,
+          errorCallBack: errorCallBack(error.message),
         })
       })
       .catch((err) => handleErrorRes(err))
@@ -186,7 +280,7 @@ const App = () => {
       showMessage({
         message: err.message,
         type: 'error',
-        errorCallBack: errorCallBack,
+        errorCallBack: errorCallBack(err.message),
       })
     }
   }
@@ -224,25 +318,28 @@ const App = () => {
   }
 
   //Хэндлер редактирования профиля
-  const handleEdit = ({ name, email }, errorCallBack, okCallBack) => {
+  const handleEdit = (data) => {
     setIsLoading(true);
 
-    mainApi.updateUserInfo({name, email})
+    setRegisterErrorMsg('');
+    setRegisterOkMsg('');
+
+    mainApi.updateUserInfo(data)
     .then((user) => {
       if (user) {
         setCurrentUser(user);
-        okCallBack('Данные пользователя обновлены');
+        setRegisterOkMsg('Данные пользователя обновлены');
       }
     })
     .catch((err) => {
       try {
         err.then((error) => {
-          (handleErrorRes(error, errorCallBack))
+          (handleErrorRes(error, setRegisterErrorMsg))
         })
         .catch((err) => handleErrorRes(err))
       } catch {
         const defaultErr = new Error('При обновлении профиля произошла ошибка');
-        (handleErrorRes(defaultErr, errorCallBack))
+        (handleErrorRes(defaultErr, setRegisterErrorMsg))
       }
     })
     .finally(() => {
@@ -261,8 +358,14 @@ const App = () => {
   }
 
   // Сохранить опции пользователя в localStorage
-  const saveUserOptions = () => {
-    localStorage.setItem('userOptions', JSON.stringify(currentUserOptions));
+  // (если переданы опции, то именно их. Если не переданы
+  // - то сохранить стэйт uSerOptions)
+  const saveUserOptions = (optionalUserOptions) => {
+    if (optionalUserOptions) {
+      localStorage.setItem('userOptions', JSON.stringify(optionalUserOptions));
+    } else {
+      localStorage.setItem('userOptions', JSON.stringify(currentUserOptions));
+    }
   }
 
   // Восстанавливает опции пользователя из localStorage
@@ -277,14 +380,14 @@ const App = () => {
 
     if (!options) {
       options = {
+        movies: [],
+        savedMovies: [],
         search: {
           search: '',
-          movies: [],
           shortsOnly: false,
         },
         savedSearch: {
           search: '',
-          movies: [],
           shortsOnly: false,
         },
       }
@@ -295,9 +398,9 @@ const App = () => {
 
   // Показать сообщение и использовать redirect/сл. действие
   const showMessage = ({
-    message,      // сообщение об ошибке
-    redirectTo,   // адрес для редиректа после
-    errorCallBack,       // коллбэк для отправки сообщения
+    message,        // сообщение об ошибке
+    redirectTo,     // адрес для редиректа после
+    errorCallBack,  // коллбэк для отправки сообщения
   }) => {
 
     if (!message) {
@@ -321,90 +424,119 @@ const App = () => {
     }
   }
 
+  // хэндлер поиска по фильмам
   const handleSearch = ({ search, shortsOnly }) => {
     setIsLoading(true);
+
     setSearchErrorMsg('');
 
-    moviesApi.getMovies()
-    .then((moviesFromApi) => {
-      if (moviesFromApi) {
-        const filteredMovies = filterMovies(
-          moviesFromApi, {search, shortsOnly}
-        );
-        // - после фильтрации -
-        if (filteredMovies.length === 0) {
-          setSearchErrorMsg(errorsOnSearch.NOT_FOUND_ERR);
-          setMovies([]);
-        } else {
-          setMovies(filteredMovies);
-        }
-        
-        // сохранить новый объект опций поиска для текущего пользователя
-        const newUserOptions = currentUserOptions;
-        newUserOptions['search']['shortsOnly'] = shortsOnly;
-        newUserOptions['search']['search'] = search;
-        newUserOptions['search']['movies'] = filteredMovies;
-        setCurrentUserOptions(newUserOptions);
-        saveUserOptions(currentUser.email);
-      }
-    })
-    .catch(() => {
-      setSearchErrorMsg(errorsOnSearch.LOAD_MOVIES_ERR);
-    })
-    .finally(() => {
+    // еcли фильмы еще не запрашивались с сервера (movies пуст)
+    if (movies.length === 0) {
+      setIsLoading(true);
+      // запросить с сервера
+      moviesApi.getMovies()
+      .then((moviesFromApi) => {
+        // модифицируем коллекцию фильмов (лайкнут|нет)
+        const modifiedMovies = modifyMovies(moviesFromApi)
 
-      setIsLoading(false)
-    })
+        // устанавливаем movies
+        setMovies(modifiedMovies);
+
+        const filteredMovies = filterMovies(modifiedMovies, { search, shortsOnly });
+        saveSearch(filteredMovies, { search, shortsOnly }, modifiedMovies);
+        
+      })
+      .catch(() => {
+        setSearchErrorMsg(errorsOnSearch.LOAD_MOVIES_ERR);
+      })
+      .finally(() => {
+        setIsLoading(false)
+      })
+    } else {
+      // устанавливаем глобальный стэйт отфильтрованных фильмов
+      saveSearch(filterMovies(movies, { search, shortsOnly }), { search, shortsOnly })
+    }
+
+    setIsLoading(false);
   }
 
-  const handleSavedSearch = ({ search, shortsOnly }) => {
-    setIsLoading(true);
+  // сохраняет последний поисковый запрос фильмов, если он дал результат, 
+  // устанавливает глобальный стэйт отфильтрованных фильмов 
+  // или глобальный стэйт ошибки поиска
+  const saveSearch = (newFilteredMovies, { search, shortsOnly }, newMovies) => {
+    if (newFilteredMovies.length === 0) {
+      setSearchErrorMsg(errorsOnSearch.NOT_FOUND_ERR);
+    } else {
+      setSearchErrorMsg('');
+    }
+
+    // установить глобальный стэйт фильмов
+    setFilteredMovies(newFilteredMovies);
+    // сохранить новый объект опций поиска для текущего пользователя
+    const newUserOptions = currentUserOptions;
+    newUserOptions['search']['shortsOnly'] = shortsOnly;
+    newUserOptions['search']['search'] = search;
+    newUserOptions['movies'] = newMovies? newMovies : movies;
+    setCurrentUserOptions(newUserOptions);
+    saveUserOptions(newUserOptions);
+  }
+
+  // изменяет каждый элемент (movie) переданного массива фильмов,
+  // добавляя свойство inSaved (true|false)
+  const modifyMovies = (originalMovies) => {
+    const modifiedMovies = originalMovies;
+
+    modifiedMovies.map((movieElement) => {
+      const inSaved = savedMovies.filter((savedMovieElement) => {
+        return movieElement.id === savedMovieElement.movieId
+      }).length > 0;
+
+      movieElement.inSaved = inSaved;
+    })
+
+    return modifiedMovies;
+  }
+
+  // хэндлер поиска по сохраненным фильмам
+  const handleSavedSearch = ({ search = '', shortsOnly = false }) => {
     setSavedSearchErrorMsg('');
 
-    mainApi.getMovies()
-    .then((moviesFromApi) => {
-      if (moviesFromApi) {
-        const filteredMovies = filterMovies(
-          moviesFromApi, {search, shortsOnly}
-        );
-        // - после фильтрации -
-        if (filteredMovies.length === 0) {
-          setSavedSearchErrorMsg(errorsOnSearch.NOT_FOUND_ERR);
-          setSavedMovies([]);
-        } else {
-          setSavedMovies(filteredMovies);
-        }
-        
-        // сохранить новый объект опций поиска для текущего пользователя
-        const newUserOptions = currentUserOptions;
-        newUserOptions['savedSearch']['shortsOnly'] = shortsOnly;
-        newUserOptions['savedSearch']['search'] = search;
-        newUserOptions['savedSearch']['movies'] = filteredMovies;
-        setCurrentUserOptions(newUserOptions);
-        saveUserOptions(currentUser.email);
-      }
-    })
-    .catch(() => {
-      setSearchErrorMsg(errorsOnSearch.LOAD_MOVIES_ERR);
-    })
-    .finally(() => {
-      setIsLoading(false)
-    })
+    // сохранить объект последнего запроса по сохраненным фильмам
+    setLastSavedSearch({search, shortsOnly});
+
+    const newFilteredSavedMovies = filterMovies(savedMovies, {search, shortsOnly})
+
+    if (newFilteredSavedMovies.length === 0 && lastSavedSearch.savedSearch) {
+      setSavedSearchErrorMsg(errorsOnSearch.NOT_FOUND_ERR);
+    } else {
+      // *** Изменение [filteredSavedMovies] ***
+      // сохраниеть отфильтрованные сохраненные фильмы
+      setFilteredSavedMovies(newFilteredSavedMovies)
+    }
   }
 
-  const filterMovies = (movies, { search, shortsOnly }) => {
+  // принимает на вход массив фильмов и возвращает новый массив фильмов,
+  // отфильтрованный по поисковой строке и параметру "короткометражки"
+  const filterMovies = (moviesForFiltering, { search, shortsOnly }) => {
+    // Определяем переменную для результата фильтрации
+    let moviesResult = moviesForFiltering;
+
+    // если нужно - фильтруем по короткометражкам
     if (shortsOnly) {
-      movies = movies.filter((movie) => {
-        return movie.duration <= 40;
+      moviesResult = moviesResult.filter((movieElement) => {
+        return movieElement.duration <= SHORTS_DURATION;
       })
     }
-    movies = movies.filter((movie) => {
+
+    // фильтруем по вхождению поисковой строки в название (RU/EN)
+    moviesResult = moviesResult.filter((movieElement) => {
       return (
-        movie.nameRU.toLowerCase().includes(search.toLowerCase())
-        || movie.nameEN.toLowerCase().includes(search.toLowerCase())
+        movieElement.nameRU.toLowerCase().includes(search.toLowerCase())
+        || movieElement.nameEN.toLowerCase().includes(search.toLowerCase())
       )
     })
-    return movies;
+
+    return moviesResult;
   }
 
   return (
@@ -437,12 +569,10 @@ const App = () => {
                       <Header {...props} />
                       <Main>
                         <Movies
-                          movies={movies}
-                          showOnlySaved={false}
+                          movies={filteredMovies}
                           onSearch={handleSearch}
                           errorMsg={searchErrorMsg}
                           userOptions={currentUserOptions}
-                          savedMovies={savedMovies}
                           onLike={handleLike}
                           onDislike={handleDislike}
                         />
@@ -458,14 +588,13 @@ const App = () => {
                   <>
                     <Header {...props} />
                     <Main>
-                      <Movies
-                        savedMovies={savedMovies}
-                        showOnlySaved={true}
+                      <SavedMovies
+                        movies={filteredSavedMovies}
                         onDislike={handleDelete}
                         userOptions={currentUserOptions}
-                        movies={movies}
                         onSearch={handleSavedSearch}
                         errorMsg={savedSearchErrorMsg}
+                        lastSavedSearch={lastSavedSearch}
                       />
                     </Main>
                     <Footer />
@@ -480,9 +609,10 @@ const App = () => {
                     <Header {...props} />
                     <Main>
                       <Profile
-                        logoutHandler={handleUserExit}
+                        onSignOut ={handleUserExit}
                         onEdit={handleEdit}
-                        {...props}
+                        errorMsg={registerErrorMsg}
+                        okMsg={registerOkMsg}
                       />
                     </Main>
                   </>
@@ -506,10 +636,13 @@ const App = () => {
                   />
                 </Main>
             } />
-            <Route path="*" element={
+            <Route path='/404' element={
               <Main>
                 <NotFound />
               </Main>
+            } />
+            <Route path="*" element={
+              <Navigate to='/404' replace={true}/>
             } />
           </Routes>
         </LoadingContext.Provider>

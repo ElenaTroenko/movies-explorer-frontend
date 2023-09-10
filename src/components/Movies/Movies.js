@@ -6,14 +6,15 @@ import React from 'react';
 import { LoadingContext } from "../../contexts/LoadingContext";
 
 
-const Movies = ({ movies, showOnlySaved, onSearch, errorMsg, userOptions, onLike, onDislike, savedMovies }) => {
+const Movies = ({ movies, onSearch, errorMsg, userOptions, onLike,
+  onDislike }) => {
   // подписка на контекст LoadingContext
   const isLoading = React.useContext(LoadingContext);
-
+  
   return (
     <>
       <SearchForm
-        showOnlySaved={showOnlySaved}
+        showOnlySaved={false}
         onSearch={onSearch}
         userOptions={userOptions}
       />
@@ -21,10 +22,9 @@ const Movies = ({ movies, showOnlySaved, onSearch, errorMsg, userOptions, onLike
       ? <Preloader showPreloader={true} />
       : <MoviesCardList
           movies={movies}
-          showOnlySaved={showOnlySaved}
+          showOnlySaved={false}
           onLike={onLike}
           onDislike={onDislike}
-          savedMovies={savedMovies}
           errorMsg={errorMsg}
         />
       }
