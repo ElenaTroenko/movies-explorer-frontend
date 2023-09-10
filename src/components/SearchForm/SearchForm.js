@@ -77,7 +77,7 @@ const SearchForm = ({ onSearch, userOptions, showOnlySaved, lastSavedSearch }) =
       <div className="search__container">
         <form className="search-form" name="search-form" noValidate>
           <input onChange={handleChange} id="input-movie" className="search-input" type="text" name="movie"
-            placeholder="Фильм" minLength="2" maxLength="40" required autoComplete="off" value={search} disabled={isLoading} />
+            placeholder="Фильм" minLength="2" maxLength="40" required autoComplete="off" value={search || ''} disabled={isLoading} />
           <button onClick={handleSubmit} className="search__btn" type="submit" disabled={isLoading}></button>
         </form>
         <div className="validate-error">{searchError}</div>
