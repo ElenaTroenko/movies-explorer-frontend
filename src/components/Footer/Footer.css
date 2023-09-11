@@ -2,6 +2,7 @@
 /* footer */
 .footer {
   background-color: #202020;
+  flex: 0 0 auto;
 }
 
 .footer__container {

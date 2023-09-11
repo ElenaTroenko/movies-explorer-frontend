@@ -1,4 +1,7 @@
-function Main({ children }) {
+import './Main.css';
+
+
+const Main = ({ children }) => {
 
   return (
 
@@ -7,7 +10,7 @@ function Main({ children }) {
     </main>
     
   )
-
 }
+
 
 export default Main;

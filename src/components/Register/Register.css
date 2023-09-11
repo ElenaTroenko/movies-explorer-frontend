@@ -67,7 +67,7 @@
   font-size: 14px;
   line-height: 15px;
   font-weight: 500;
-  margin: 91px auto 16px;
+  margin: 11px auto 16px;
   color: #fff;
   cursor: pointer;
   padding: 15px 0 15px;
@@ -77,6 +77,15 @@
 
 .register__edit:hover {
   opacity: 0.8;
+}
+
+.register__edit:disabled:hover {
+  opacity: 1;
+}
+
+.register__edit:disabled {
+  background-color: #333;
+  cursor: not-allowed;
 }
 
 .register__question-text {
@@ -100,6 +109,15 @@
 
 .register__enter:hover {
   opacity: 0.7;
+}
+
+.register__error {
+  color: #ee3465;
+  font-size: 11px;
+  font-weight: 400;
+  margin-bottom: 10px;
+  margin-top: 80px;
+  text-align: center;
 }
 
 @media screen and (max-width: 450px) {
