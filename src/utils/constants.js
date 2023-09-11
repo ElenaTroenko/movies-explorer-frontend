@@ -32,7 +32,7 @@ export const SCREEN_RULES = {
 }
 
 export const BASE_URLS = {
-  mainApiBaseUrl: 'http://127.0.0.1:3000',
+  mainApiBaseUrl: 'https://api.et-movies.nomoreparties.co',
   moviesApiBaseUrl: 'https://api.nomoreparties.co/beatfilm-movies',
   moviesBaseUrl: 'https://api.nomoreparties.co',
 }
